@@ -1,4 +1,4 @@
-import { Experience } from '@/app/data';
+import { Experience } from "@/app/data";
 
 /**
  * Returns the start and end indices of an experience in the timeline
@@ -8,18 +8,27 @@ import { Experience } from '@/app/data';
  * @returns The start and end indices of the experience
  */
 export const experienceTimelineIndices = (
-  experience: Experience,
-  years: number[]
+    experience: Experience,
+    years: number[]
 ) => {
-  const startDate = new Date(experience.start);
-  const start =
-    (startDate.getFullYear() - 2015) / 4 + Math.floor(startDate.getMonth() / 3);
-  console.log(startDate.getFullYear());
-  const endDate =
-    experience.end === 'present' ? new Date() : new Date(experience.end);
-  const end =
-    (endDate.getFullYear() - 2015) * 4 + Math.floor(endDate.getMonth() / 3) - 1;
+    const startDate = new Date(experience.start);
+    const start =
+        (startDate.getFullYear() - years[0]) * 4 +
+        Math.ceil(startDate.getMonth() / 3);
 
-  console.table({ name: experience.company, start, end });
-  return { start, end };
+    const endDate =
+        experience.end === "present" ? new Date() : new Date(experience.end);
+    const end =
+        (endDate.getFullYear() - years[0]) * 4 +
+        Math.ceil(endDate.getMonth() / 3);
+
+    console.table({
+        name: experience.company,
+        yearStart: experience.start,
+        yearEnd: experience.end,
+        endDate,
+        start,
+        end,
+    });
+    return { start, end };
 };
